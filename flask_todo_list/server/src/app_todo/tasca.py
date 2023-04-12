@@ -39,6 +39,7 @@ class Tasca():
         # assert issubclass(type(persistencia), src.app_todo.persistencia_tasca.Persistencia_tasca) 
         # self._persistencia = persistencia
         
+        
         """
           la funció strip() treu els espais sobrants 
           del darrera i del començament d'una cadena de text.
