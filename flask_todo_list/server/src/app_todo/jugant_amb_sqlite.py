@@ -21,6 +21,7 @@ def crea_taules(conn): #conn = conexión
     cursor.execute(consulta)
     conn.commit()  #commit guarda los cambios en base datos
     cursor.close()
+    
 def afegir_tasques(conn, titol, done=False):
     consulta = f"INSERT INTO tasques (title, done) VALUES('{titol}', {done});"
     cursor = conn.cursor()  # cursor, necesario para añadir, etc...
