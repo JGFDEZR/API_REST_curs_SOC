@@ -17,7 +17,9 @@
     </style>
     <script>
         function llegeix_tasques(){
-            fetch("http://localhost:5000/tasks", {
+            host = window.location.protocol.concat("//").concat(window.location.host);
+            console.log(host)
+            fetch(host.concat("/tasks"), {
                     method: 'GET'
                 })
                 .then((response) => response.json())
@@ -25,7 +27,11 @@
                     console.log("Success:", data);
                     tasques = data;
                     tasques.forEach((item) => {
-                        escriu_llista(item["titol"]);
+                        esta_hecha = "💩";
+                        if (item["done"]){
+                            esta_hecha = "😎";
+                        }
+                        escriu_llista(item["titol"] + " " + esta_feta);
                     });
                 })
                 .catch((error) => {
