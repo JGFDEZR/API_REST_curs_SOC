@@ -13,12 +13,12 @@ class Usuari():
         self._id = valor
 
     @property
-    def nombre(self):
-        return self._nombre
+    def nom(self):
+        return self._nom
     
-    @nombre.setter
-    def nombre(self, valor):
-        self._nombre = valor
+    @nom.setter
+    def nom(self, valor):
+        self._nom = valor
 
     @property
     def nick(self):
@@ -32,21 +32,33 @@ class Usuari():
     def password(self):
         return self._password
     
-    @id.setter
+    @password.setter
     def password(self, valor):
         self._password = valor
 
+    @property                 #persistencia para conectar con la base de datos
+    def persistencia(self):
+        return self._persistencia
+    
+    @persistencia.setter
+    def persistencia(self, valor):
+        self._persistencia = valor
 
-    def __init__(self, id, nombre, nick, password):
+
+    def __init__(self, persistencia, nom=None, nick=None, password=None, id=None):
         
-        self._id = id
-        self._nombre = nombre
+        self._nom = nom
         self._nick = nick
         self._password = password
+        self._id = id
+        self._persistencia = persistencia
 
     def desa(self):
 
-        pass
+        resultat = self._persistencia.desa(self)
+        if resultat:
+            self.id = resultat.id
+        return resultat
 
     def get_usuari_by_nick(self, nick):
 
@@ -61,5 +73,5 @@ class Usuari():
         pass
 
     def __str__(self):
-        resultat = {'id': self._id, 'nombre': self._nombre, 'nick': self._nick, 'password': self._password}
+        resultat = {'id': self._id, 'nombre': self._nom, 'nick': self._nick, 'password': self._password}
         return json.dumps(resultat)
