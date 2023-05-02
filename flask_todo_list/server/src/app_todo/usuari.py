@@ -61,9 +61,13 @@ class Usuari():
         return resultat
 
     def llegeix_amb_nick(self):
-        resultat = self.persistencia.llegeix_amb_nick(self._nick)
+        resultat = self._persistencia.llegeix_amb_nick(self._nick)
         return resultat
     
+    def desa_api_key(self, api_key):
+        resultat = self._persistencia.desa_api_key(self, api_key)
+        return resultat
+
     def get_usuari_by_api_key(self, key):
 
         pass

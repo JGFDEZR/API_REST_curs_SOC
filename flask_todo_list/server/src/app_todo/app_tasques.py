@@ -44,6 +44,7 @@ class App_tasques():
         return resultat
 
     def afegeix_tasca(self, tasca_nova):
+        # TODO prohibir usuaris no login
         tasca_nova.persistencia = self._persistencia_tasques
         tasca_nova.desa() # se guarda ella sola
 
@@ -51,17 +52,22 @@ class App_tasques():
         return self._persistencia_tasques.get_list()  # devuelve la lista de tascas.
     
     def modifica_tasca(self, tasca):
+        # TODO prohibir usuaris no login
         return self._persistencia_tasques.modifica_tasca(tasca)
     
     def esborra_tasca(self, id):
+        # TODO prohibir usuaris no login
         return self._persistencia_tasques.esborra_tasca(id)
     
     def login(self, nick, password):
         usuari_passat_pel_client = usuari.Usuari(self._persistencia_usuaris, None, nick, password)
         usuari_de_base_dades = usuari_passat_pel_client.llegeix_amb_nick()
+        if not usuari_de_base_dades: #si no coinciden nick,pass return none
+            return None
         comparacio = bcrypt.checkpw(password.encode('utf-8'), usuari_de_base_dades.password.encode('utf-8'))
         if comparacio:
             api_key = uuid.uuid4()
-            #TODO desar api_key a la base de dades
+            #desar api_key a la base de dades
+            usuari_de_base_dades.desa_api_key(api_key)
             return api_key
         return None
