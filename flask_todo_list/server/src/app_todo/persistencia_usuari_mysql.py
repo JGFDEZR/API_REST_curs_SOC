@@ -45,6 +45,18 @@ class Persistencia_usuari_mysql():
         cursor.close()
         return resultat
     
+    def llegeix_amb_nick(self, nick):
+        consulta = f"SELECT id, password_hash from usuaris where nick = '{nick}';"
+        cursor = self._conn.cursor(buffered=True)
+        resultat = None
+        cursor.execute(consulta)
+        dades = cursor.fetchone()
+        cursor.reset()
+        cursor.close()
+        if dades:
+            nou_usuari = usuari.Usuari(self, dades[2], nick, dades[1], dades[0])
+        return nou_usuari
+    
     def calcula_hash(self, password):
         bytes = password.encode('utf-8')
         sal = bcrypt.gensalt()
@@ -109,7 +121,7 @@ def main():
     nova_persistencia = Persistencia_usuari_mysql()
     nou_usuari = usuari.Usuari(nova_persistencia, "José", "Chuni", "1234")
     print(nou_usuari.desa())
-
+    res = nova_persistencia.llegeix_amb_nick = 'Chuni'
 
 
 if __name__=="__main__":

@@ -60,9 +60,8 @@ class Usuari():
             self.id = resultat.id
         return resultat
 
-    def get_usuari_by_nick(self, nick):
-
-        pass
+    def llegeix_amb_nick(self):
+        resultat = self.persistencia.llegeix_amb_nick(self._nick)
 
     def get_usuari_by_api_key(self, key):
 
