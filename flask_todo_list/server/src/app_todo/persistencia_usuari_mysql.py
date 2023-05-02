@@ -46,7 +46,7 @@ class Persistencia_usuari_mysql():
         return resultat
     
     def llegeix_amb_nick(self, nick):
-        consulta = f"SELECT id, password_hash from usuaris where nick = '{nick}';"
+        consulta = f"SELECT id, password_hash, nom from usuaris where nick = '{nick}';"
         cursor = self._conn.cursor(buffered=True)
         resultat = None
         cursor.execute(consulta)
@@ -55,7 +55,8 @@ class Persistencia_usuari_mysql():
         cursor.close()
         if dades:
             nou_usuari = usuari.Usuari(self, dades[2], nick, dades[1], dades[0])
-        return nou_usuari
+            return nou_usuari
+        return None
     
     def calcula_hash(self, password):
         bytes = password.encode('utf-8')

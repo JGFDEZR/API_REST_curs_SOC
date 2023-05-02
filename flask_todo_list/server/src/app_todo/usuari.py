@@ -24,7 +24,7 @@ class Usuari():
     def nick(self):
         return self._nick
     
-    @id.setter
+    @nick.setter
     def nick(self, valor):
         self._nick = valor
 
@@ -62,7 +62,8 @@ class Usuari():
 
     def llegeix_amb_nick(self):
         resultat = self.persistencia.llegeix_amb_nick(self._nick)
-
+        return resultat
+    
     def get_usuari_by_api_key(self, key):
 
         pass

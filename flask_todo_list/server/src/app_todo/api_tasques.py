@@ -54,6 +54,21 @@ def registre():
         return "", 201
     return "", 400
 
+@app.route('/login', methods=['POST'])
+def login():
+    info_body = flask.request.get_data()  #info_body = '{"title": "hola"}'  -> str
+    usuari_nou = json.loads(info_body)    #tasca_nova = {"title": "hola"}  -> dictionary
+    objecte_usuari = usuari.Usuari(
+        None, None, 
+        usuari_nou["nick"], 
+        usuari_nou["password"]
+        )  # Object_usuari -> usuari.Usuari
+    resultat = core_app.login(objecte_usuari.nick, objecte_usuari.password)
+    if resultat:
+        return flask.jsonify({"api_key": resultat}), 201
+    return "", 403
+
+
 app.run(
     host="0.0.0.0",
     debug=False)
