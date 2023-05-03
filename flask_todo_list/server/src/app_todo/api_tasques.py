@@ -17,6 +17,15 @@ def delete_task(id):
 @app.route("/tasks", methods = ["POST", "GET", "PUT"])
 def tasks():
     if flask.request.method == "POST":
+        x_api_key = None #api inicializada
+        if 'x-api-key' in flask.request.headers: #leemos cabeceras
+            x_api_key = flask.request.headers['x-api-key']
+        else:
+            return "", 403
+        usuari_autoritzat = core_app.llegeix_usuari_amb_api_key(x_api_key)
+        if not usuari_autoritzat:
+            return "", 403
+
         info_body = flask.request.get_data()  #info_body = '{"title": "hola"}'  -> str
         tasca_nova = json.loads(info_body)    #tasca_nova = {"title": "hola"}  -> dictionary
         objecte_tasca = tasca.Tasca(None, tasca_nova["title"])  # Object_Tasca -> tasca.Tasca
