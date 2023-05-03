@@ -25,11 +25,12 @@ class Persistencia_tasca_mysql():
         
         titol = tasca.titol
         done  = tasca.done
+        id_propietari = tasca.propietari.id 
         resultat = None
 
         consulta = "INSERT INTO tasques " \
-                    + "(titol, done)" \
-                    + f"VALUES('{titol}', {done});"
+                    + "(titol, done, id_propietari)" \
+                    + f"VALUES('{titol}', {done}, {id_propietari});"
         
         cursor = self._conn.cursor(buffered=True)  # cursor, necesario para añadir, etc...
         try:      #para q no salga error(IntegrityError) cuando la tasca ya esté hecha
@@ -104,7 +105,7 @@ class Persistencia_tasca_mysql():
         cursor = self._conn.cursor()  # cursor, necesario para añadir, etc...
         consulta = "DROP TABLE if exists tasques;"
         cursor.execute(consulta)
-        consulta = "CREATE TABLE if not exists tasques(id int not null auto_increment, titol TEXT UNIQUE, done BOOLEAN, primary key(id));"
+        consulta = "CREATE TABLE if not exists tasques(id int not null auto_increment, titol TEXT UNIQUE, done BOOLEAN, primary key(id), id_propietari int not null references usuaris (id) on delete cascade);"
         cursor.execute(consulta)
         self._conn.commit()  #commit guarda los cambios en base datos
         cursor.reset()

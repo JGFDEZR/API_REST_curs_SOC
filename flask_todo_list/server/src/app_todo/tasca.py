@@ -39,7 +39,15 @@ class Tasca():
     def done(self, valor):
         self._done = valor
 
-    def __init__(self, persistencia, titol, done=False, id=None):
+    @property
+    def propietari(self):
+        return self._propietari       
+
+    @propietari.setter
+    def propietari(self, valor):
+        self._propietari = valor
+
+    def __init__(self, persistencia, titol, done=False, id=None, propietari=None):
         # assert issubclass(type(persistencia), src.app_todo.persistencia_tasca.Persistencia_tasca) 
         
         
@@ -51,6 +59,7 @@ class Tasca():
         self._titol = str(titol).strip()
         self._done = done
         self._id = id
+        self._propietari = propietari 
 
     def desa(self):
         resultat = self._persistencia.desa(self)
