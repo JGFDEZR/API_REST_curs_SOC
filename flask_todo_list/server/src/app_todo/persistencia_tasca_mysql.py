@@ -44,15 +44,16 @@ class Persistencia_tasca_mysql():
         cursor.close()
         return resultat
     
-    def get_list(self):
+    def get_list(self, usuari_autoritzat):
         
-        consulta = "SELECT titol, done, id FROM tasques;"
+        consulta = f"SELECT titol, done, id FROM tasques where id_propietari={usuari_autoritzat.id};"
         cursor = self._conn.cursor(buffered=True)
         cursor.execute(consulta)
         llista = cursor.fetchall()
         resultat = []
         for registre in llista:
             tarea = tasca.Tasca(self, registre[0], registre[1], registre[2])
+            tarea.propietari = usuari_autoritzat
             resultat.append(tarea)
         cursor.reset()
         cursor.close()        

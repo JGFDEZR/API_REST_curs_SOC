@@ -40,7 +40,7 @@ def tasks():
         if not usuari_autoritzat:
             return "", 403
         llista_jsons = []
-        llista_tasques = core_app.llegir_tasques()
+        llista_tasques = core_app.llegir_tasques(usuari_autoritzat)
         for t in llista_tasques:
             tasca_json = str(t)                         #tasca_json -> str
             tasca_diccionary = json.loads(tasca_json)   #tasca diccionary -> diccionary

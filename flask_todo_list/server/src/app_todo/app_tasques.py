@@ -48,8 +48,8 @@ class App_tasques():
         tasca_nova.persistencia = self._persistencia_tasques
         tasca_nova.desa() # se guarda ella sola
 
-    def llegir_tasques(self):
-        return self._persistencia_tasques.get_list()  # devuelve la lista de tascas.
+    def llegir_tasques(self, usuari_autoritzat):
+        return self._persistencia_tasques.get_list(usuari_autoritzat)  # devuelve la lista de tascas.
     
     def modifica_tasca(self, tasca):
         # TODO prohibir usuaris no login
